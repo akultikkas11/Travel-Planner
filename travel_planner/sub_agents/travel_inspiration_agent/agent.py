@@ -1,4 +1,6 @@
 from google.adk.agents.llm_agent import Agent
+from google.adk.tools.agent_tool import AgentTool
+from travel_planner.sub_agents.travel_inspiration_agent.tools.agent_tools.agent import news_agent
 
 travel_inspiration_agent = Agent(
     model="gemini-2.5-flash",
@@ -54,6 +56,8 @@ travel_inspiration_agent = Agent(
             6. Current Updates (from News Agent if needed)
             7. Travel Tips
     """,
+
+    tools=[AgentTool(agent=news_agent)]
 )
 
 root_agent = travel_inspiration_agent
