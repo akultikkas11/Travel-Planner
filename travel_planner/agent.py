@@ -1,4 +1,5 @@
 from google.adk.agents.llm_agent import Agent
+from travel_planner.sub_agents.travel_inspiration_agent.agent import travel_inspiration_agent
 
 root_agent = Agent(
     model='gemini-2.5-flash',
@@ -19,4 +20,6 @@ root_agent = Agent(
         - Politely refuse unrelated queries
         - Always use the Travel Inspiration Agent for trip planning and recommendations
     """,
+
+    sub_agents = [travel_inspiration_agent]
 )
