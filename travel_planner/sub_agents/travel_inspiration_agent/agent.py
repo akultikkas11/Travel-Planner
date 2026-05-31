@@ -1,6 +1,7 @@
 from google.adk.agents.llm_agent import Agent
 from google.adk.tools.agent_tool import AgentTool
 from travel_planner.sub_agents.travel_inspiration_agent.tools.agent_tools.agent import news_agent
+from travel_planner.sub_agents.travel_inspiration_agent.tools.function_tools.places_agent.places_tool import places_tool
 
 travel_inspiration_agent = Agent(
     model="gemini-2.5-flash",
@@ -39,16 +40,65 @@ travel_inspiration_agent = Agent(
                 - current local situations
                 - ongoing public events
 
+        Places Tool(places_tool) Usage Rules:
+            - Use places_agent whenever users ask for:
+                - nearby hotels
+                - nearby cafes
+                - nearby restaurants
+                - nearby attractions
+                - exact geographic locations
+
+            - When a user asks for nearby amenities, extract:
+                - `loc` → the central landmark, attraction, or location name
+                - `query` → the amenity or place category being requested
+
+            - Pass:
+                - the extracted landmark/location into `loc`
+                - the extracted amenity type into `query`
+
+            - Strip out helper phrases and intent words like:
+                - "near"
+                - "close to"
+                - "around"
+                - "places to eat"
+                - "looking for"
+                
+            - Use places_tool for location-based searches
+                
+            - Examples when places_agent needs to invoked:
+                - "cafes near Eiffel Tower"
+                - "hotels near Taj Mahal"
+                - "restaurants near Times Square"
+                - "places to eat near Colosseum"
+            
+            - Examples of query parameter parsing:
+                - User: "cafes near Eiffel Tower"
+                -> places_tool(query="cafes", loc="Eiffel Tower")
+
+                - User: "hotels near Taj Mahal"
+                -> places_tool(query="hotels", loc="Taj Mahal")
+
+                - User: "restaurants around Times Square"
+                -> places_tool(query="restaurants", loc="Times Square")
+
+                - User: "places to eat near Colosseum"
+                -> places_tool(query="restaurants", loc="Colosseum")
+
+
+            - When using places_tool:
+                - Return the tool results directly
+                - Do not heavily summarize or rewrite the locations
+
         Behavioral Rules:
             - Always personalize recommendations
             - Keep responses organized and user-friendly
             - Use bullet points and sections whenever possible
             - Never fabricate real-time information
             - Never pretend to know current prices or live events without using News Agent
-            - Never invent addresses or coordinates without using Places Agent
+            - Never invent addresses or coordinates without using places_tool
             - Return concise summaries from News Agent results instead of raw search outputs
 
-            Response Style:
+        Response Style:
             - Friendly
             - Enthusiastic
             - Helpful
@@ -63,7 +113,11 @@ travel_inspiration_agent = Agent(
             5. Travel Tips
     """,
 
-    tools=[AgentTool(agent=news_agent)]
+    tools=
+        [
+            AgentTool(agent=news_agent), 
+            places_tool
+        ]
 )
 
 root_agent = travel_inspiration_agent
