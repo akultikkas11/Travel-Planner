@@ -195,8 +195,7 @@ PROJECT-1
 ### Trip Planning
 
 * Plan a 5-day trip to Paris
-* Create a honeymoon itinerary for Switzerland
-* Suggest a budget-friendly trip to Japan
+* Suggest a trip to Japan
 
 ### Real-Time Information
 
@@ -215,3 +214,206 @@ PROJECT-1
 ## Additional details
 
 This project is intended for learning and experimentation with multi-agent AI systems using Google ADK.
+
+---
+
+## Running the Project Locally
+
+Follow the steps below to run the Travel Planner application on your local machine.
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+```
+Replace `<repository-url>` with the GitHub repository URL.
+
+---
+
+### 2. Open the Project in VS Code
+
+Navigate to the folder where the repository was cloned.
+
+Right-click the project folder and select:
+
+```text
+Open with Code
+```
+
+---
+
+### 3. Verify Project Structure
+
+Open a terminal in VS Code and run:
+
+```bash
+ls
+```
+
+You should see the following files and folders:
+
+```text
+travel_planner
+.gitignore
+README.md
+requirements.txt
+```
+
+If these files are not visible:
+
+* Verify that you are in the correct project directory.
+* Check the current path.
+* Navigate to the project root folder again.
+* Re-run:
+
+```bash
+ls
+```
+
+until the above structure is visible.
+
+---
+
+### 4. Configure Environment Variables
+
+Look into the `travel_planner` folder:
+
+Locate the sample environment file:
+
+```text
+.env.sample
+```
+
+In the same level as .evn.sample file, Create a new file named:
+
+```text
+.env
+```
+
+Copy the contents from `.env.sample` and add your Google API key.
+
+Example:
+
+```env
+GOOGLE_API_KEY=your_google_api_key_here
+```
+
+---
+
+### 5. Generate a Google API Key
+
+To create a Google API key:
+
+1. Open Google AI Studio.
+2. Navigate to:
+
+   ```text
+   Google AI Studio → API Keys
+   ```
+3. Create a new API key.
+4. Copy the generated key.
+5. Paste it into the `.env` file.
+
+---
+
+### 6. Install Dependencies
+
+From the project root directory, run:
+
+```bash
+pip install -r requirements.txt
+```
+
+This will install all required Python packages.
+
+---
+
+### 7. Start the ADK Web Interface
+
+Run:
+
+```bash
+adk web
+```
+
+After the application starts successfully, a localhost URL will be displayed in the terminal.
+
+Example:
+
+```text
+http://localhost:8000
+```
+
+---
+
+### 8. Open the Application
+
+Copy the localhost URL and paste it into your browser.
+
+The ADK web interface should now be available.
+
+---
+
+### 9. Test the Application
+
+Try some sample queries:
+
+#### Trip Planning
+
+```text
+Plan a 5-day trip to Paris
+```
+
+#### Real-Time Information
+
+```text
+Are there any protests in Paris right now?
+```
+
+```text
+What festivals are happening in Tokyo this week?
+```
+
+```text
+Are there any travel advisories for Bali?
+```
+
+---
+
+### Troubleshooting
+
+#### Dependencies Not Installing
+
+Ensure Python and pip are installed:
+
+```bash
+python --version
+pip --version
+```
+
+---
+
+#### API Key Issues
+
+Verify that:
+
+* `.env` exists inside the `travel_planner` directory.
+* The API key is correctly copied.
+* No extra spaces or quotation marks are present.
+
+---
+
+### Expected Workflow
+
+```text
+User
+  ↓
+Travel Planner (Root Agent)
+  ↓
+Travel Inspiration Agent
+  ↓
+News Agent (when real-time information is required)
+```
+
+The Places Tool integration is currently under development and will be available in future updates.
+
